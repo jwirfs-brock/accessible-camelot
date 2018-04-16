@@ -6,11 +6,12 @@
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="camelot.css" title="default">
   <meta http-equiv="Default-Style" content="default">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 <body>
 
-  <video id="player" autoplay width=320 height=240></video>
+<video id="player" autoplay width=320 height=240></video>
 <button id="capture" class="pic">Capture</button>
 <canvas id="canvas" width=320 height=240></canvas>
 <script>
@@ -28,6 +29,8 @@
 
     // Stop all video streams.
     player.srcObject.getVideoTracks().forEach(track => track.stop());
+
+    window.location = "success-excalibur.html";
   });
 
   navigator.mediaDevices.getUserMedia(constraints)
@@ -36,14 +39,8 @@
       player.srcObject = stream;
     });
 </script>
-  <button class="pic" id="takePicture">Tap anywhere to take your picture</button>
 
 
-<script type="text/javascript">
-    document.getElementById("takePicture").onclick = function () {
-        location.href = "success-excalibur.html";
-    };
-</script>
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
