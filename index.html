@@ -8,15 +8,50 @@
   </head>
 
   <body>
-<div class="content">
+<div id="select-game">
+<h1>Select a Game Element</h1>
+<button id="excalibur">Excalibur</button>
+<button id="siege">Siege Engines</button>
+<button id="round-table">Round Table</button>
+</div>
 
-<div class="dropdown" id="selectGameElement">
-  <button onclick="myFunction()" class="dropbtn" role="button">Select a game component</button>
-  <div id="myDropdown" class="dropdown-content" role="menu">
-    <a href="excalibur.html" role="menuitem">Excalibur</a>
-    <a href="#" role="menuitem">Round Table</a>
-    <a href="#" role="menuitem">Seige Engines</a>
+<div id="take-picture">
+
+<video id="player" autoplay width=320 height=240></video>
+<button id="capture" class="pic">Tap anywhere to take a photo</button>
+<canvas id="canvas" width=320 height=240></canvas>
+<script>
+const player = document.getElementById('player');
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d');
+const captureButton = document.getElementById('capture');
+
+const constraints = {
+  video: true,
+};
+
+captureButton.addEventListener('click', () => {
+  context.drawImage(player, 0, 0, canvas.width, canvas.height);
+
+  // Stop all video streams.
+  player.srcObject.getVideoTracks().forEach(track => track.stop());
+});
+
+navigator.mediaDevices.getUserMedia(constraints)
+  .then((stream) => {
+    // Attach the video stream to the video element and autoplay.
+    player.srcObject = stream;
+  });
+</script>
+</div>
+
+<div id="results">
+  <div id="game-state">
   </div>
+
+  <button id="reset">Check another game element</button>
+
+
 </div>
 
 

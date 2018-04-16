@@ -1,289 +1,73 @@
-tabs = ["dialer","contact-list","add-contact","about"];
-// Sets the initial tabPosition to 0 (dialer)
-tabPosition = 0;
+var gameElement = "";
+var excalTries = 0;
+var excaliburPosition = -2;
+var message =  "This is the current state of the game."
 
 $(document).ready(function() {  // do when document is loaded
-    switchTabs(tabPosition)
+  $("#select-game").show(); // show buttons to selecdt game component
+  $("#take-picture").hide();  // hide picture taking code
+  $("#results").hide(); // hide results page
+
 });
 
+$("#excalibur").click(function(){
 
-
-// I updated all the button clicks so they now use the switchTabs() function
-$("#dialer").click(function() { // when the "dialer" button is clicked
-  switchTabs(0)
+  $("#select-game").hide(); // show buttons to selecdt game component
+  $("#take-picture").show();  // hide picture taking code
+  $("#results").hide(); // hide results page
+  gameElement = "excalibur";
 });
 
-$("#contact-list").click(function() { // when the "contact-list" button is clicked
-  switchTabs(1)
+$("#siege").click(function(){
+  $("#select-game").hide(); // show buttons to selecdt game component
+  $("#take-picture").show();  // hide picture taking code
+  $("#results").hide(); // hide results page
+  gameElement = "siege";
 });
 
-$("#add-contact").click(function() { // when the "add-contact" button is clicked
-  switchTabs(2)
+$("#round-table").click(function(){
+  $("#select-game").hide(); // show buttons to selecdt game component
+  $("#take-picture").show();  // hide picture taking code
+  $("#results").hide(); // hide results page
+  gameElement = "round-table";
+
 });
 
-$("#about").click(function() { // when the "about" button is clicked
-  switchTabs(3)
-});
+$("#capture").click(function(){
+  var num = Math.floor(Math.random() * 10);
+  if ((num % 2) === 0){
+    $("#select-game").hide(); // hide buttons to selecdt game component
+    $("#take-picture").hide();  // hide picture taking code
+    $("#results").show(); // show results page
 
-
-/** // Toggle large format mode -- I really can't get this to work by switching the style sheets, ahhh!
-
-$("#large-format-on").click(function() { // when the "Turn off large format" button is clicked
-  setActiveStyleSheet('alternate'); //add code to switch the style sheet to the large format one
-  //window.location.href = 'index.html';
-  //switchTabs(3); // This should make sure you stay on the same tab -- but for some reason it's not working!! :(
-});
-
-$("#large-format-off").click(function() { // when the "Turn on large format" button is clicked
-  setActiveStyleSheet('default');
-});
-
-**/
-
-// When you click a button, add that number into the dialer
-$("#1").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "1")
-}
-);
-$("#2").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "2")
-}
-);
-$("#3").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "3")
-}
-);
-$("#4").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "4")
-}
-);
-$("#5").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "5")
-}
-);
-$("#6").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "6")
-}
-);
-$("#7").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "7")
-}
-);
-$("#8").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "8")
-}
-);
-$("#9").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "9")
-}
-);
-$("#0").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "0")
-}
-);
-$("#star").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "*")
-}
-);
-$("#pound").click(function() {
-  $("#dial-number").val($("#dial-number").val() + "#")
-}
-);
-
-// When you click "Clear", reset the dialer field
-$("#clear").click(function() {
-  $("#dial-number").val("")
-}
-);
-/*
-// Mouse down in gesture area
-$("#gesture-box-1").mousedown(function() {
-  $("#about-output").val("mouse down")
-}
-);
-// Mouse up in gesture area
-$("#gesture-box-1").mouseup(function() {
-  $("#about-output").val("mouse up")
-}
-);
-*/
-/*
-// Mouse is hovering (before down and up click)
-$("#gesture-box-1").hover(function() {
-  $("#about-output").val("hover")
-}
-);
-*/
-
-// Mouse leaves gesture area
-$("#gesture-box-1").mouseleave(function() {
-  $("#about-output").val("ready")
-}
-);
-
-// Detect left or right swipe
-downX = 0;
-downY = 0;
-
-$("#gesture-box-1").mousedown(function(event) {
-
-  downX = event.pageX;
-  downY = event.pageY;
-
-  $("#about-output").val("mouse down")
-}
-);
-
-$("#gesture-box-1").mouseup(function(event) {
-  upX = event.pageX;
-  upY = event.pageY;
-
-  if ((upX - downX) > 20) {
-    $("#about-output").val("swipe right")
-  }
-  else if ((upX - downX) < -20) {
-    $("#about-output").val("swipe left")
-  }
-  else if((upY - downY) > 20){
-    $("#about-output").val("swipe down")
-  }
-  else if((upY - downY) < -20){
-    $("#about-output").val("swipe up")
-  }
-  else {
-    $("#about-output").val("mouse up")
-  }
-}
-);
-
-// This function switches tabs based on tabPosition.
-// tabPosition 0 = dialer; 1 = contacts; 2 = add contacts; 3 = about
-
-function switchTabs(tabPosition) {
-  if (tabPosition == 0){
-    // Show dialer tab and hide others
-      $("#dialer-content").show(); // show the "dialer-content"
-      $("#contact-list-content").hide(); // hide the contact-list-content in the starting state
-      $("#add-contact-content").hide(); // hide the add-contact-content in the starting state
-      $("#about-content").hide(); // hide the about-content
-      $("#dialer").addClass("active"); // switch to active style
-      $("#contact-list").removeClass("active"); // remove active style from all others
-      $("#add-contact").removeClass("active"); // remove active style from all others
-      $("#about").removeClass("active"); // remove active style from all others
-      tabPosition = 0; // reset tabPosition (just in case)
-  }
-  if (tabPosition == 1){
-    // Show Contact List tab and hide others
-      $("#dialer-content").hide(); // hide the "dialer-content"
-      $("#contact-list-content").show(); // show the contact-list-content in the starting state
-      $("#add-contact-content").hide(); // hide the add-contact-content in the starting state
-      $("#about-content").hide(); // hide the about-content
-      $("#dialer").removeClass("active"); // switch to active style
-      $("#contact-list").addClass("active"); // remove active style from all others
-      $("#add-contact").removeClass("active"); // remove active style from all others
-      $("#about").removeClass("active"); // remove active style from all others
-      tabPosition = 1;
-  }
-  if (tabPosition == 2){
-    // Show Add Contact tab and hide others
-      $("#dialer-content").hide(); // hide the "dialer-content"
-      $("#contact-list-content").hide(); // hide the contact-list-content in the starting state
-      $("#add-contact-content").show(); // show the add-contact-content in the starting state
-      $("#about-content").hide(); // hide the about-content
-      $("#dialer").removeClass("active"); // switch to active style
-      $("#contact-list").removeClass("active"); // remove active style from all others
-      $("#add-contact").addClass("active"); // remove active style from all others
-      $("#about").removeClass("active"); // remove active style from all others
-      tabPosition = 2;
-
-  }
-  if (tabPosition == 3){
-    // Show About This Project tab and hide others
-      $("#dialer-content").hide(); // hide the "dialer-content"
-      $("#contact-list-content").hide(); // hide the contact-list-content in the starting state
-      $("#add-contact-content").hide(); // hide the add-contact-content in the starting state
-      $("#about-content").show(); // show the about-content
-      $("#dialer").removeClass("active"); // switch to active style
-      $("#contact-list").removeClass("active"); // remove active style from all others
-      $("#add-contact").removeClass("active"); // remove active style from all others
-      $("#about").addClass("active"); // remove active style from all others
-      tabPosition = 3;
-  }
-
-
-}
-
-// This listens for key strokes and updates tab position based on the direction
-// It then calls the tabPosition() function to update the content
-document.addEventListener('keypress', (event) => {
-const keyName = event.key;
-if (keyName == "ArrowLeft"){
-  tabPosition = tabPosition-1;
-  if (tabPosition == -1){
-    tabPosition = 3
-  }
-  switchTabs(tabPosition)
-}
-if (keyName == "ArrowRight"){
-  tabPosition = tabPosition+1;
-  if (tabPosition == 4){
-    tabPosition = 0
-  }
-  switchTabs(tabPosition)
-}
-});
-
-// Switching tabs with the gesture nav
-$("#gesture-box-2").mousedown(function(event) {
-
-  downX = event.pageX;
-  downY = event.pageY;
-
-}
-);
-
-$("#gesture-box-2").mouseup(function(event) {
-  upX = event.pageX;
-  upY = event.pageY;
-
-    // Navigate to the left on a right swipe
-  if ((upX - downX) > 20) {
-    tabPosition = tabPosition-1;
-    if (tabPosition == -1){
-      tabPosition = 3
-    }
-    switchTabs(tabPosition)
-  }
-  // Navigate to the right on a left swipe
-  else if ((upX - downX) < -20) {
-    tabPosition = tabPosition+1;
-    if (tabPosition == 4){
-      tabPosition = 0
-    }
-    switchTabs(tabPosition)
-  }
-
-}
-);
-
-
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
+    if(gameElement === 'excalibur'){
+      if (excalTries == 0){
+        document.getElementById('game-state').innerHTML="<h2>Excalibur is at position -3.</h2>";
+        excalTries = excalTries + 1;
       }
+      else {
+        document.getElementById('game-state').innerHTML="<h2>Excalibur is at position -4.</h2>";
+      }
+
+    }
+    if(gameElement === 'siege'){
+      document.getElementById('game-state').innerHTML="<h2>There are 5 (out of 12) siege engines on the board.</h2>";
+    }
+    if(gameElement === 'round-table'){
+      document.getElementById('game-state').innerHTML="<h2>There are 3 white swords and 2 black swords at the round table.</h2>";
     }
   }
-}
+
+  else {
+    alert("Please retake the photo");
+  }
+
+});
+
+$("#reset").click(function(){
+
+  $("#select-game").show(); // show buttons to selecdt game component
+  $("#take-picture").hide();  // hide picture taking code
+  $("#results").hide(); // hide results page
+  gameElement = "";
+});
